@@ -6,8 +6,8 @@
 <body>
     <div>
         
-        <?php echo form_open('urluser/'); ?>
-        <form>
+        
+        <form action="urluser" method="POST">
             <label>
             <center>
                 <input type="text" name="url_data" placeholder="Paste a link to shorten it" autocomplete="off"/>

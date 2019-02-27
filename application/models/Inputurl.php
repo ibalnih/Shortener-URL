@@ -6,26 +6,6 @@ class Inputurl extends CI_Model{
         // $this->load->helper('url');
     }
 
-    // public function index()
-    // {
-        
-    // }
-    // public function addUrl($longUrl, $shortUrl){
-    //     $data = array(
-    //         'long_url' => $longUrl,
-    //         'short_urls' => $shortUrl,
-    //     );
-    //     $this->db->insert('shorten', $data);
-    // }
-
-    // public function getUrl($url)
-    // {
-    //     $urldt = $this->db->get_where('shorten', array('long_url' => $url));
-        
-    //     return $urldt->result_array();
-    // }
-
-
     // Shorten Link
     public function addUrlEM($data){
         $this->db->insert('short', $data);
@@ -34,7 +14,11 @@ class Inputurl extends CI_Model{
     public function checkEM($url)
     {
         $query = $this->db->get_where('short', array('url' => $url));
-        return $query->result_array();
+        if($query->num_rows() > 0) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
     public function checkCustom($redirect)
@@ -42,6 +26,15 @@ class Inputurl extends CI_Model{
         $query = $this->db->get_where('short', array('redirect' => $redirect));
         return $query->result_array();
     }
-    //End Shorten Link
     
+    public function getUrl($url)
+    {
+        $query = $this->db->where(array('redirect' => $url))->get('short');
+        if($query->num_rows() == 1) {
+            return $query->row();
+        } else {
+            return false;
+        }
+    }
+    //End Shorten Link
 }
